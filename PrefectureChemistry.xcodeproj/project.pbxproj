@@ -98,9 +98,9 @@
 			children = (
 				35689DA62B8C1C5A0024C1C6 /* PrefectureChemistryApp.swift */,
 				35689DA82B8C1C5A0024C1C6 /* ContentView.swift */,
+				35689DD02B8C2D770024C1C6 /* ResultView.swift */,
 				35689DAA2B8C1C5C0024C1C6 /* Assets.xcassets */,
 				35689DAC2B8C1C5C0024C1C6 /* Preview Content */,
-				35689DD02B8C2D770024C1C6 /* ResultView.swift */,
 			);
 			path = PrefectureChemistry;
 			sourceTree = "<group>";

@@ -10,7 +10,7 @@ import SwiftUI
 struct YearMonthDay: Codable {
     let year: Int
     let month: Int
-    let Day: Int
+    let day: Int
 }
 
 struct PersonalInfo: Codable {
@@ -25,7 +25,7 @@ struct ContentView: View {
     let bloodTypes = ["a", "b", "ab", "o"]
     
     @State private var name = ""
-    @State private var date = Date()
+    @State private var birthday = Date()
     @State private var userBloodType = "a"
     
     var body: some View {
@@ -34,7 +34,7 @@ struct ContentView: View {
             TextField("名前", text: $name)
             DatePicker(
                 "誕生日",
-                selection: $date,
+                selection: $birthday,
                 displayedComponents: [.date]
             )
             .environment(\.locale, Locale(identifier: "ja_JP"))
@@ -51,6 +51,34 @@ struct ContentView: View {
                 Text("診断する")
             }).buttonStyle(.borderedProminent)
         }.padding()
+    }
+    
+    func convertYeerMonthDay(date: Date) -> YearMonthDay {
+        let calendar = Calendar(identifier: .gregorian)
+        let date = Date()
+        let year = calendar.component(.year, from: date)
+        let month = calendar.component(.year, from: date)
+        let day = calendar.component(.day , from: date)
+        
+        return YearMonthDay(year: year, month: month, day: day)
+    }
+    
+    func setPersonalInfo() {
+        let birthdayYearMonthDay = convertYeerMonthDay(date: birthday)
+        
+        let todayYearMonthDay = convertYeerMonthDay(date: Date())
+        
+        let person = PersonalInfo(name: name, birthday: birthdayYearMonthDay, blood_type: userBloodType, today: todayYearMonthDay)
+        
+        let encoder = JSONEncoder()
+        do {
+            let jsonData = try encoder.encode(person)
+            if let jsonString = String(data: jsonData, encoding: .utf8) {
+                print(jsonString) //
+            }
+        } catch {
+            print("Failed to encode: \(error)")
+        }
     }
 }
 
