@@ -22,11 +22,15 @@ struct PersonalInfo: Codable {
 }
 
 struct ContentView: View {
+    @ObservedObject var prefectureFetcher = PrefectureFetcher()
+    
     let bloodTypes = ["a", "b", "ab", "o"]
     
     @State private var name = ""
     @State private var birthday = Date()
     @State private var userBloodType = "a"
+    
+    @State private var showingSheet = false
     
     var body: some View {
         VStack {
@@ -47,9 +51,12 @@ struct ContentView: View {
                 Text("血液型")
             }
             
-            Button(action: {}, label: {
+            Button(action: {tellPrefecture()}, label: {
                 Text("診断する")
             }).buttonStyle(.borderedProminent)
+            .sheet(isPresented: $showingSheet) {
+                ResultView(prefecture: prefectureFetcher.prefecture)
+                        }
         }.padding()
     }
     
@@ -63,22 +70,78 @@ struct ContentView: View {
         return YearMonthDay(year: year, month: month, day: day)
     }
     
-    func setPersonalInfo() {
+    func setPersonalInfo() -> PersonalInfo {
         let birthdayYearMonthDay = convertYeerMonthDay(date: birthday)
         
         let todayYearMonthDay = convertYeerMonthDay(date: Date())
         
         let person = PersonalInfo(name: name, birthday: birthdayYearMonthDay, blood_type: userBloodType, today: todayYearMonthDay)
         
+        return person
+    }
+    
+    func tellPrefecture() {
+        let person = setPersonalInfo()
+        prefectureFetcher.encodePersonalInfo(person: person)
+        prefectureFetcher.postPersonalInfo()
+    }
+}
+
+class PrefectureFetcher: ObservableObject {
+    @Published var prefecture = [Prefecture]()
+    var jsonString: String = ""
+    
+    func encodePersonalInfo(person: PersonalInfo) {
         let encoder = JSONEncoder()
         do {
             let jsonData = try encoder.encode(person)
-            if let jsonString = String(data: jsonData, encoding: .utf8) {
-                print(jsonString) //
+            if String(data: jsonData, encoding: .utf8) != nil {
             }
         } catch {
             print("Failed to encode: \(error)")
         }
+    }
+    
+    func postPersonalInfo() {
+        guard var url = URL(string: "https://yumemi-ios-junior-engineer-codecheck.app.swift.cloud/my_fortune") else {
+            print("Invalid URL")
+            return
+        }
+        
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: jsonString) else {
+            print("Error converting JSON to Data")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.allHTTPHeaderFields = ["API-Version": "v1"]
+        request.httpBody = jsonData
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+                return
+            }
+
+            guard let data = data else {
+                print("Invalid data")
+                return
+            }
+
+            do {
+                let decoder = JSONDecoder()
+                let prefecture = try decoder.decode([Prefecture].self, from: data)
+                DispatchQueue.main.async {
+                    self.prefecture = prefecture
+                    print(prefecture)
+                }
+            } catch let error {
+                print("Error decoding JSON: \(error.localizedDescription)")
+            }
+        }.resume()
     }
 }
 
