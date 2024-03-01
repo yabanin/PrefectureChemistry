@@ -32,9 +32,14 @@ struct ContentView: View {
     
     @State private var showingSheet = false
     
+    @State private var showingWarning = false
+    
     var body: some View {
         VStack {
             Text("名前と誕生日、血液型を入力して占う！")
+            if showingWarning {
+                Text("名前を入力してください").foregroundColor(.red)
+            }
             TextField("名前", text: $name)
             DatePicker(
                 "誕生日",
@@ -72,18 +77,19 @@ struct ContentView: View {
         return YearMonthDay(year: year, month: month, day: day)
     }
     
-    func setPersonalInfo() -> PersonalInfo {
+    func tellPrefecture() {
+        if name.count == 0 {
+            showingWarning.toggle()
+            
+            return
+        }
+        
         let birthdayYearMonthDay = convertYearMonthDay(from: birthday)
         
         let todayYearMonthDay = convertYearMonthDay(from: Date())
         
         let person = PersonalInfo(name: name, birthday: birthdayYearMonthDay, blood_type: userBloodType, today: todayYearMonthDay)
         
-        return person
-    }
-    
-    func tellPrefecture() {
-        let person = setPersonalInfo()
         prefectureFetcher.postPersonalInfo(person: person)
         showingSheet.toggle()
     }
