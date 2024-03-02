@@ -14,6 +14,7 @@
 		35689DB82B8C1C5C0024C1C6 /* PrefectureChemistryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35689DB72B8C1C5C0024C1C6 /* PrefectureChemistryTests.swift */; };
 		35689DC22B8C1C5C0024C1C6 /* PrefectureChemistryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35689DC12B8C1C5C0024C1C6 /* PrefectureChemistryUITests.swift */; };
 		35689DC42B8C1C5C0024C1C6 /* PrefectureChemistryUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35689DC32B8C1C5C0024C1C6 /* PrefectureChemistryUITestsLaunchTests.swift */; };
+		35689DD12B8C2D770024C1C6 /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35689DD02B8C2D770024C1C6 /* ResultView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		35689DBD2B8C1C5C0024C1C6 /* PrefectureChemistryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PrefectureChemistryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		35689DC12B8C1C5C0024C1C6 /* PrefectureChemistryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefectureChemistryUITests.swift; sourceTree = "<group>"; };
 		35689DC32B8C1C5C0024C1C6 /* PrefectureChemistryUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefectureChemistryUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		35689DD02B8C2D770024C1C6 /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 			children = (
 				35689DA62B8C1C5A0024C1C6 /* PrefectureChemistryApp.swift */,
 				35689DA82B8C1C5A0024C1C6 /* ContentView.swift */,
+				35689DD02B8C2D770024C1C6 /* ResultView.swift */,
 				35689DAA2B8C1C5C0024C1C6 /* Assets.xcassets */,
 				35689DAC2B8C1C5C0024C1C6 /* Preview Content */,
 			);
@@ -259,6 +262,7 @@
 			files = (
 				35689DA92B8C1C5A0024C1C6 /* ContentView.swift in Sources */,
 				35689DA72B8C1C5A0024C1C6 /* PrefectureChemistryApp.swift in Sources */,
+				35689DD12B8C2D770024C1C6 /* ResultView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
