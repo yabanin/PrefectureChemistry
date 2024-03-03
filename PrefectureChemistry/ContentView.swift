@@ -36,17 +36,21 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            Text("名前と誕生日、血液型を入力して占う！")
+            Text("あなたと相性のいい都道府県を占う！").font(.title)
             if showingWarning {
                 Text("名前を入力してください").foregroundColor(.red)
             }
-            TextField("名前", text: $name)
+            Text("○ 名前").frame(maxWidth: .infinity, alignment: .leading)
+            TextField("例：ゆめみん", text: $name)
+            Text("○ 誕生日").frame(maxWidth: .infinity, alignment: .leading)
             DatePicker(
                 "誕生日",
                 selection: $birthday,
                 displayedComponents: [.date]
-            )
+            ).datePickerStyle(.wheel)
             .environment(\.locale, Locale(identifier: "ja_JP"))
+            .labelsHidden()
+            Text("○ 血液型").frame(maxWidth: .infinity, alignment: .leading)
             Picker(selection: $userBloodType) {
                 Text("A型").tag("a")
                 Text("B型").tag("b")
@@ -55,7 +59,6 @@ struct ContentView: View {
             } label: {
                 Text("血液型")
             }
-            
             Button(action: {tellPrefecture()}, label: {
                 Text("診断する")
             }).buttonStyle(.borderedProminent)
@@ -79,9 +82,11 @@ struct ContentView: View {
     
     func tellPrefecture() {
         if name.count == 0 {
-            showingWarning.toggle()
+            showingWarning = true
             
             return
+        } else {
+            showingSheet = false
         }
         
         let birthdayYearMonthDay = convertYearMonthDay(from: birthday)
@@ -90,9 +95,12 @@ struct ContentView: View {
         
         let person = PersonalInfo(name: name, birthday: birthdayYearMonthDay, blood_type: userBloodType, today: todayYearMonthDay)
         
+        
         prefectureFetcher.postPersonalInfo(person: person)
         showingSheet.toggle()
     }
+    
+    
 }
 
 class PrefectureFetcher: ObservableObject {
@@ -115,7 +123,6 @@ class PrefectureFetcher: ObservableObject {
         do {
             let encodeData = try encoder.encode(person)
             request.httpBody = encodeData
-            //print(String(data: encodeData, encoding: .utf8)!)
         } catch {
             print("Failed to encode: \(error)")
         }
@@ -129,8 +136,6 @@ class PrefectureFetcher: ObservableObject {
                 print("Invalid data")
                 return
             }
-            
-            //print(String(data: data, encoding: .utf8))
             
             do {
                 let decoder = JSONDecoder()

@@ -24,17 +24,17 @@ class MonthDay: Codable {
 struct ResultView: View {
     let prefecture: Prefecture
     @State var image: UIImage?
-    
+
     var body: some View {
          ScrollView {
             Text("相性のいい都道府県は...")
             Text(prefecture.name).font(.largeTitle)
-            if let image = image {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 150, height: 150)
-            }
+             if let image = image {
+                 Image(uiImage: image)
+                     .resizable()
+                     .scaledToFit()
+                     .frame(width: 150, height: 150)
+             }
             HStack {
                 Text("県庁所在地")
                 Text(prefecture.capital)
