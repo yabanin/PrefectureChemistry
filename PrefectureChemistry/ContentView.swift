@@ -7,19 +7,7 @@
 
 import SwiftUI
 
-struct YearMonthDay: Codable {
-    let year: Int
-    let month: Int
-    let day: Int
-}
 
-struct PersonalInfo: Codable {
-    let name: String
-    let birthday: YearMonthDay
-    let blood_type: String
-    let today: YearMonthDay
-    
-}
 
 struct ContentView: View {
     @ObservedObject var prefectureFetcher = PrefectureFetcher()
