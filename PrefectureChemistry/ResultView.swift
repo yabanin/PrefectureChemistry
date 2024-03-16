@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ResultView: View {
     let prefecture: Prefecture
+    let result = Result()
     @State var image: UIImage?
 
     var body: some View {
@@ -39,12 +40,15 @@ struct ResultView: View {
             Text(prefecture.brief)
         }.onAppear {
             let url = prefecture.logo_url
-            downloadImageAsync(url: URL(string: url)!) { image in
+            result.downloadImageAsync(url: URL(string: url)!) { image in
                 self.image = image
             }
         }
     }
     
+}
+
+class Result {
     func downloadImageAsync(url: URL, completion: @escaping (UIImage?) -> Void) {
         let session = URLSession(configuration: .default)
         let task = session.dataTask(with: url) { (data, _, _) in
@@ -58,5 +62,5 @@ struct ResultView: View {
         }
         task.resume()
     }
-}
 
+}
