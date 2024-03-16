@@ -60,18 +60,3 @@ struct ResultView: View {
     }
 }
 
-
-let jsonSamplePrefecture = """
-{
-    "name": "富山県",
-    "has_coast_line": true,
-    "citizen_day": {
-        "month": 5,
-        "day": 9
-    },
-    "capital": "富山市",
-    "logo_url": "https://japan-map.com/wp-content/uploads/toyama.png"
-    "brief": "富山県（とやまけん）は、日本の中部地方に位置する県。県庁所在地は富山市。\n中部地方の日本海側、新潟県を含めた場合の北陸地方のほぼ中央にある。\n※出典: フリー百科事典『ウィキペディア（Wikipedia）』",
-}
-""".data(using: .utf8)!
-
