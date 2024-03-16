@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		353208892BA60BEA00D1CAE3 /* PrefectureModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353208882BA60BEA00D1CAE3 /* PrefectureModel.swift */; };
 		35689DA72B8C1C5A0024C1C6 /* PrefectureChemistryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35689DA62B8C1C5A0024C1C6 /* PrefectureChemistryApp.swift */; };
 		35689DA92B8C1C5A0024C1C6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35689DA82B8C1C5A0024C1C6 /* ContentView.swift */; };
 		35689DAB2B8C1C5C0024C1C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35689DAA2B8C1C5C0024C1C6 /* Assets.xcassets */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		353208882BA60BEA00D1CAE3 /* PrefectureModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefectureModel.swift; sourceTree = "<group>"; };
 		35689DA32B8C1C5A0024C1C6 /* PrefectureChemistry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrefectureChemistry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35689DA62B8C1C5A0024C1C6 /* PrefectureChemistryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefectureChemistryApp.swift; sourceTree = "<group>"; };
 		35689DA82B8C1C5A0024C1C6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				35689DA62B8C1C5A0024C1C6 /* PrefectureChemistryApp.swift */,
 				35689DA82B8C1C5A0024C1C6 /* ContentView.swift */,
 				35689DD02B8C2D770024C1C6 /* ResultView.swift */,
+				353208882BA60BEA00D1CAE3 /* PrefectureModel.swift */,
 				35689DAA2B8C1C5C0024C1C6 /* Assets.xcassets */,
 				35689DAC2B8C1C5C0024C1C6 /* Preview Content */,
 			);
@@ -262,6 +265,7 @@
 			files = (
 				35689DA92B8C1C5A0024C1C6 /* ContentView.swift in Sources */,
 				35689DA72B8C1C5A0024C1C6 /* PrefectureChemistryApp.swift in Sources */,
+				353208892BA60BEA00D1CAE3 /* PrefectureModel.swift in Sources */,
 				35689DD12B8C2D770024C1C6 /* ResultView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
