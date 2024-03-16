@@ -7,37 +7,23 @@
 
 import SwiftUI
 
-struct YearMonthDay: Codable {
-    let year: Int
-    let month: Int
-    let day: Int
-}
-
-struct PersonalInfo: Codable {
-    let name: String
-    let birthday: YearMonthDay
-    let blood_type: String
-    let today: YearMonthDay
-    
-}
-
 struct ContentView: View {
     @ObservedObject var prefectureFetcher = PrefectureFetcher()
     
-    let bloodTypes = ["a", "b", "ab", "o"]
+    //let bloodTypes = ["a", "b", "ab", "o"]
     
     @State private var name = ""
     @State private var birthday = Date()
     @State private var userBloodType = "a"
     
-    @State private var showingSheet = false
+    @State private var isShowingSheet = false
     
-    @State private var showingWarning = false
+    @State private var shouldShowingWarning = false
     
     var body: some View {
         VStack {
             Text("あなたと相性のいい都道府県を占う！").font(.title)
-            if showingWarning {
+            if shouldShowingWarning {
                 Text("名前を入力してください").foregroundColor(.red)
             }
             Text("○ 名前").frame(maxWidth: .infinity, alignment: .leading)
@@ -62,7 +48,7 @@ struct ContentView: View {
             Button(action: {tellPrefecture()}, label: {
                 Text("診断する")
             }).buttonStyle(.borderedProminent)
-            .sheet(isPresented: $showingSheet) {
+            .sheet(isPresented: $isShowingSheet) {
                 if let prefecture = prefectureFetcher.prefecture {
                     ResultView(prefecture: prefecture)
                 }
@@ -82,11 +68,11 @@ struct ContentView: View {
     
     func tellPrefecture() {
         if name.count == 0 {
-            showingWarning = true
+            shouldShowingWarning = true
             
             return
         } else {
-            showingSheet = false
+            isShowingSheet = false
         }
         
         let birthdayYearMonthDay = convertYearMonthDay(from: birthday)
@@ -97,58 +83,7 @@ struct ContentView: View {
         
         
         prefectureFetcher.postPersonalInfo(person: person)
-        showingSheet.toggle()
-    }
-    
-    
-}
-
-class PrefectureFetcher: ObservableObject {
-    @Published var prefecture: Prefecture?
-    
-    func postPersonalInfo(person: PersonalInfo) {
-        guard let url = URL(string: "https://yumemi-ios-junior-engineer-codecheck.app.swift.cloud/my_fortune") else {
-            print("Invalid URL")
-            return
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.allHTTPHeaderFields = ["API-Version": "v1"]
-        
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-        do {
-            let encodeData = try encoder.encode(person)
-            request.httpBody = encodeData
-        } catch {
-            print("Failed to encode: \(error)")
-        }
-        
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let error = error {                print("Error: \(error.localizedDescription)")
-                return
-            }
-
-            guard let data = data else {
-                print("Invalid data")
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let decodedData = try decoder.decode(Prefecture.self, from: data)
-                DispatchQueue.main.async {
-                    self.prefecture = decodedData
-                    print(self.prefecture!)
-                    
-                }
-            } catch let error {
-                print("Error decoding JSON: \(error.localizedDescription)")
-            }
-        }.resume()
+        isShowingSheet.toggle()
     }
 }
 
