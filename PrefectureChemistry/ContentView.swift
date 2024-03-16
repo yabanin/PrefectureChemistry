@@ -18,14 +18,14 @@ struct ContentView: View {
     @State private var birthday = Date()
     @State private var userBloodType = "a"
     
-    @State private var showingSheet = false
+    @State private var isShowingSheet = false
     
-    @State private var showingWarning = false
+    @State private var shouldShowingWarning = false
     
     var body: some View {
         VStack {
             Text("あなたと相性のいい都道府県を占う！").font(.title)
-            if showingWarning {
+            if shouldShowingWarning {
                 Text("名前を入力してください").foregroundColor(.red)
             }
             Text("○ 名前").frame(maxWidth: .infinity, alignment: .leading)
@@ -50,7 +50,7 @@ struct ContentView: View {
             Button(action: {tellPrefecture()}, label: {
                 Text("診断する")
             }).buttonStyle(.borderedProminent)
-            .sheet(isPresented: $showingSheet) {
+            .sheet(isPresented: $isShowingSheet) {
                 if let prefecture = prefectureFetcher.prefecture {
                     ResultView(prefecture: prefecture)
                 }
@@ -70,11 +70,11 @@ struct ContentView: View {
     
     func tellPrefecture() {
         if name.count == 0 {
-            showingWarning = true
+            shouldShowingWarning = true
             
             return
         } else {
-            showingSheet = false
+            isShowingSheet = false
         }
         
         let birthdayYearMonthDay = convertYearMonthDay(from: birthday)
@@ -85,7 +85,7 @@ struct ContentView: View {
         
         
         prefectureFetcher.postPersonalInfo(person: person)
-        showingSheet.toggle()
+        isShowingSheet.toggle()
     }
     
     
